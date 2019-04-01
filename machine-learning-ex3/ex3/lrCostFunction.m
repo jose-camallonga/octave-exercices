@@ -37,7 +37,10 @@ grad = zeros(size(theta));
 %
 
 
-
+hypothesis = sigmoid(X * theta);
+theta(1,1) = 0; % remove first parameter
+J = (1/m) * (-y' * log(hypothesis) - (1 - y)' * log(1 - hypothesis)) + (lambda/(2*m))*(theta'*theta);
+grad = (1/m) * X' * (hypothesis - y) + (lambda/m) * theta;
 
 
 
