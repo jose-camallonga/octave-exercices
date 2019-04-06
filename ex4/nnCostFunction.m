@@ -63,20 +63,20 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
+% Part 1
 
+X = [ones(m, 1) X];
+a1 = X;
+z2 = a1 * Theta1';
+a2 = sigmoid(z2);
+m2 = size(a2, 1);
+a2 = [ones(m2, 1) a2];
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
+hypothesis = a3;
 
-
-
-
-
-
-
-
-
-
-
-
-
+yk = eye(num_labels)(y,:);
+J = -(1/m) * sum(sum(yk .* log(hypothesis) + (1 - yk) .* log(1 - hypothesis)));
 
 
 
