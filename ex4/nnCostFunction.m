@@ -92,6 +92,16 @@ J = J + (lambda/(2*m)) * (sum(sum(Theta1.^2)) + sum(sum(Theta2.^2)));
 
 % -------------------------------------------------------------
 
+delta_3 = a3 - yk';
+size(delta_3)
+delta_2 = (Theta2' * delta_3') .* sigmoidGradient(z2)';
+
+D1 = delta_2(2:end)' * a1;    
+D2 = delta_3' * a2;    
+Theta1_grad = Theta1_grad + (1/m) * D1;
+Theta2_grad = Theta2_grad + (1/m) * D2;
+
+
 % =========================================================================
 
 % Unroll gradients
