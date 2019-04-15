@@ -75,9 +75,19 @@ z3 = a2 * Theta2';
 a3 = sigmoid(z3);
 hypothesis = a3;
 
-yk = eye(num_labels)(y,:);
-J = -(1/m) * sum(sum(yk .* log(hypothesis) + (1 - yk) .* log(1 - hypothesis)));
 
+yk = zeros(num_labels, m); 
+for i = 1:m
+yk(y(i), i) = 1;
+end
+
+% Feedforward and cost function
+J = (1/m) * sum(sum(-yk' .* log(hypothesis) - (1 - yk)' .* log(1 - hypothesis)));
+
+% Regularized cost function
+Theta1(:,[1]) = []; % remove 1st column
+Theta2(:,[1]) = []; % remove 1st column
+J = J + (lambda/(2*m)) * (sum(sum(Theta1.^2)) + sum(sum(Theta2.^2)));
 
 
 % -------------------------------------------------------------
