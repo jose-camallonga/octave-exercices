@@ -85,21 +85,26 @@ end
 J = (1/m) * sum(sum(-yk' .* log(hypothesis) - (1 - yk)' .* log(1 - hypothesis)));
 
 % Regularized cost function
-Theta1(:,[1]) = []; % remove 1st column
-Theta2(:,[1]) = []; % remove 1st column
-J = J + (lambda/(2*m)) * (sum(sum(Theta1.^2)) + sum(sum(Theta2.^2)));
+Theta1_r1 = Theta1;
+Theta1_r1(:,[1]) = []; % remove 1st column
+Theta2_r1 = Theta2;
+Theta2_r1(:,[1]) = []; % remove 1st column
+J = J + (lambda/(2*m)) * (sum(sum(Theta1_r1.^2)) + sum(sum(Theta2_r1.^2)));
 
 
 % -------------------------------------------------------------
+Delta_1 = zeros(size(Theta1));
+Delta_2 = zeros(size(Theta2));
 
-delta_3 = a3 - yk';
-size(delta_3)
-delta_2 = (Theta2' * delta_3') .* sigmoidGradient(z2)';
+delta_3 = a3 - yk';                                             
 
-D1 = delta_2(2:end)' * a1;    
-D2 = delta_3' * a2;    
-Theta1_grad = Theta1_grad + (1/m) * D1;
-Theta2_grad = Theta2_grad + (1/m) * D2;
+delta_2 = (delta_3 * Theta2_r1) .* sigmoidGradient(z2);     
+
+Delta_1 = Delta_1 + delta_2' * a1;    
+Delta_2 = Delta_2 + delta_3' * a2;    
+
+Theta1_grad = (1/m) * Delta_1;
+Theta2_grad = (1/m) * Delta_2;
 
 
 % =========================================================================
