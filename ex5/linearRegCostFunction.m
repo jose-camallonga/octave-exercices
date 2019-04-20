@@ -23,15 +23,14 @@ grad = zeros(size(theta));
 
 
 
-
-
-
-
+hypothesis = X * theta;
+theta(1) = 0;
+J = (1/(2*m)) * sum(((hypothesis-y).^2)) + (lambda/(2*m)) * sum(theta.^2);
 
 
 
 % =========================================================================
 
-grad = grad(:);
+grad = (1/m) * X' * (hypothesis - y) + (lambda/m) * theta;
 
 end
